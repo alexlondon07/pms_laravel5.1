@@ -20,7 +20,10 @@ class UsersTableSeeder extends Seeder
           'enable' => 'si',
           'remember_token' => str_random(10)
       ]);
-      
+
       factory(App\User::class, 49)->create();
+      // factory(App\Activity::class, 50)->create();
+      // factory(App\Machine::class, 50)->create();
+      // factory(App\RawMaterial::class, 50)->create();
     }
 }

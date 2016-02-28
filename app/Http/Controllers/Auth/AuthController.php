@@ -62,7 +62,7 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-
+        
     /**
   	 * Get the failed login message.
   	 *
