@@ -57,3 +57,15 @@ $factory->define(App\RawMaterial::class, function (Faker\Generator $faker) {
 			'enable' => 'si'
     ];
 });
+
+//Productos
+$factory->define(App\Product::class, function (Faker\Generator $faker) {
+    return [
+      'name' => $faker->name,
+      'reference' => $faker->postcode,
+      'description' => $faker->text,
+      'inspection_points' => 'ninguno',
+      'inspection' => 'si',
+      'enable' => 'si'
+    ];
+});

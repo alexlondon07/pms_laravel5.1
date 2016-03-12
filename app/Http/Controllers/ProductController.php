@@ -2,6 +2,8 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use View;
+use App\Product;
 
 use Illuminate\Http\Request;
 
@@ -14,7 +16,9 @@ class ProductController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		$items = Product::paginate();
+		$items->setPath('product');
+		return View::make('admin.product.view_product', compact('items'));
 	}
 
 	/**
@@ -24,7 +28,9 @@ class ProductController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		$product = new Product;
+		$show = false;
+		return View::make('admin.product.new_edit_product', compact('product', 'show'));
 	}
 
 	/**

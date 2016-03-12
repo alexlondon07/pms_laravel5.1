@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
       DB::table('activities')->truncate();
       DB::table('machines')->truncate();
       DB::table('raw_materials')->truncate();
+      DB::table('products')->truncate();
 
       factory(App\User::class)->create([
           'name' => 'Alexander andres londoño espejo',
@@ -28,5 +29,6 @@ class UsersTableSeeder extends Seeder
       factory(App\Activity::class, 50)->create();
       factory(App\Machine::class, 50)->create();
       factory(App\RawMaterial::class, 50)->create();
+      factory(App\Product::class, 50)->create();
     }
 }

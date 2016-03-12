@@ -21,7 +21,6 @@ class Product extends Model {
      * Atributos que se pueden insertar en Mass-Assignment
      * @var array
      */
-    protected $fillable = array('name','reference','description','inspection_points','inspection','classification','existence','enable');
-    /**
-
+    protected $fillable = ['name','reference','description','inspection_points','inspection','classification','existence','enable'];
+    
 }
