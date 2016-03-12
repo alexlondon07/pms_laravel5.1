@@ -24,7 +24,7 @@ class CreateRawMaterialRequest extends Request {
 		return [
             'name' => 'required|max:60',
             'reference'  => 'required',
-            'type' => 'in:critica,usuario,no_critica',
+            'type' => 'in:critica,usuario,no_critica,seleccione',
             'enable'=>'in:si,no'
 			 		];
 	}

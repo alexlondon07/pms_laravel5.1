@@ -39,6 +39,7 @@
                             <th>Referencia</th>
                             <th>Tipo</th>
                             <th>Unidad de medida</th>
+                            <th>Habilitado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,6 +61,7 @@
                              <td>{!! $item->reference !!}</td>
                              <td>{!! $item->type !!}</td>
                              <td>{!! $item->unit_of_measure !!}</td>
+                             <td>{!! $item->enable !!}</td>
                             <td>
                         </tr>
                         @endforeach
