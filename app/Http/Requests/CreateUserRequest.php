@@ -26,7 +26,7 @@ class CreateUserRequest extends Request {
             'document'  => 'required',
             'email'  => 'required|email|unique:users,email',
             'password'  => 'required',
-            'profile' => 'in:colaborador,usuario,super_admin',
+            'profile' => 'in:operario,usuario,super_admin,jefe_produccion,jefe',
             'enable'=>'in:si,no'
 		];
 	}

@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -10,6 +8,9 @@ use App\User;
 use App\Attachment;
 use View;
 use Redirect;
+use Auth;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\EditUserRequest;
 
 class UserController extends Controller
 {
@@ -44,10 +45,21 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+     public function store(CreateUserRequest $request)
+     {
+         $user = User::create($request->all());
+         //Ingresamos la imagen relacionada
+         if (\Input::hasFile('file')) {
+             $f = \Input::file('file');
+             if ($f) {
+                 $att = new Attachment;
+                 $att->user_id = $user->id;
+                 $r = array();
+                 $r = AttachmentController::uploadAttachment($f, $att);
+             }
+         }
+         return Redirect::to('admin/user')->with('success_message', 'Registro guardado!');
+     }
 
     /**
      * Display the specified resource.
@@ -64,7 +76,6 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -77,12 +88,11 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditUserRequest $request, $id)
     {
       $user = User::findOrFail($id);
       $user->fill($request->all());
@@ -104,7 +114,6 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -113,10 +122,19 @@ class UserController extends Controller
       $user = User::find($id);
       $user->delete();
       //Eliminamos imagen asociada de usuario
-      //AttachmentController::destroyAllByUserId($user->id);
+      AttachmentController::destroyAllByUserId($user->id);
       return Redirect::to('admin/user')->with('success_message', 'El registro ha sido borrado.')->withInput();
     }
 
+    /**
+     * Metodo para cerrar la sesion del usuario
+     */
+    public function doLogout() {
+        if (Auth::check()) {
+            Auth::logout();
+        }
+        return Redirect::to('/');
+    }
 
     /**
      * Metodo para hacer la busqueda

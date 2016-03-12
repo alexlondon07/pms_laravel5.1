@@ -14,8 +14,9 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('home', 'HomeController@index');
+Route::get('home', 'HomeController@main');
 
+Route::any('auth/logout', 'UserController@doLogout');
 
 // Authentication routes...
 Route::get('/', 'Auth\AuthController@getLogin');
@@ -34,7 +35,6 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 // Password reset routes...
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
-
 
 /*
  * Rutas para las vistas de administracion de nuestra aplicacion

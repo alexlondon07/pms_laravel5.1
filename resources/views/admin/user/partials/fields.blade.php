@@ -27,7 +27,7 @@
                         <div class="form-group">
                             {!!Form::label('profile', 'Perfil', array('class' => 'control-label col-md-4'))!!}
                             <div class="col-md-6">
-                                {!!Form::select('profile',array('usuario'=>'Usuario','super_admin'=>'Administrador','operario'=>'Operario'), null, array('class'=>'form-control')) !!}
+                                {!!Form::select('profile',array('usuario'=>'Usuario','super_admin'=>'Administrador','operario'=>'Operario','jefe_produccion'=>'Jefe de produccion', 'jefe' =>'Jefe'), null, array('class'=>'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group">
