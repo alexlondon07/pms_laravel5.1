@@ -12,6 +12,10 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
       DB::table('users')->truncate();
+      DB::table('activities')->truncate();
+      DB::table('machines')->truncate();
+      DB::table('raw_materials')->truncate();
+
       factory(App\User::class)->create([
           'name' => 'Alexander andres londoño espejo',
           'email' => 'admin@admin.com',
@@ -20,10 +24,9 @@ class UsersTableSeeder extends Seeder
           'enable' => 'si',
           'remember_token' => str_random(10)
       ]);
-
       factory(App\User::class, 49)->create();
-      // factory(App\Activity::class, 50)->create();
-      // factory(App\Machine::class, 50)->create();
-      // factory(App\RawMaterial::class, 50)->create();
+      factory(App\Activity::class, 50)->create();
+      factory(App\Machine::class, 50)->create();
+      factory(App\RawMaterial::class, 50)->create();
     }
 }
