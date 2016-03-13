@@ -4,6 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use View;
 use App\Product;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\CreateProductRequest;
 
 use Illuminate\Http\Request;
 
@@ -38,9 +40,10 @@ class ProductController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	 public function store(CreateProductRequest $request)
 	{
-		//
+		$product = Product::create($request->all());
+		return Redirect::to('admin/product')->with('success_message', 'Registro guardado!');
 	}
 
 	/**
@@ -51,7 +54,9 @@ class ProductController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		$product = Product::findOrFail($id);
+		$show = true;
+		return View::make('admin.product.new_edit_product', compact('product', 'show'));
 	}
 
 	/**
@@ -62,7 +67,9 @@ class ProductController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$product = Product::findOrFail($id);
+		$show = false;
+		return View::make('admin.product.new_edit_product', compact('product', 'show'));
 	}
 
 	/**
@@ -71,9 +78,12 @@ class ProductController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(CreateProductRequest $request, $id)
 	{
-		//
+		$product = Product::findOrFail($id);
+		$product->fill($request->all());
+		$product->save();
+		return Redirect::to('admin/product')->with('success_message', 'Registro actualizado!');
 	}
 
 	/**
@@ -84,7 +94,9 @@ class ProductController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		$product = Product::findOrFail($id);
+		$product->delete();
+		return Redirect::to('admin/product')->with('success_message', 'El registro ha sido borrado.')->withInput();
 	}
 
 }
