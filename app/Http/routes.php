@@ -57,3 +57,8 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
         Route::resource('product', 'ProductController');
         Route::get('products/search', 'ProductController@search');
  });
+
+ // llamados ajax
+ Route::group(array('prefix' => 'ajax'), function() {
+     Route::any('get_machine_data_table', 'ActivityController@getMachineDataTable');
+ });

@@ -1,4 +1,4 @@
-<input type="hidden" name="_token" value="{{ csrf_token() }}">
+<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
 <div class="form-group">
     {!!Form::label('name', 'Nombre', array('class' => 'control-label col-md-4'))!!}
     <div class="col-md-6">
@@ -34,4 +34,10 @@
     <div class="col-md-6">
         {!! Form::select('enable',array('si'=>'si','no'=>'no'), null, array('class'=>'form-control')) !!}
     </div>
+</div>
+
+<div class="form-group">
+  {!! Form::hidden('details', null, array('id' => 'details')) !!}
+  <input type="hidden" name="table_details" id="table_details"/>
+  <div id="div_details"></div>
 </div>

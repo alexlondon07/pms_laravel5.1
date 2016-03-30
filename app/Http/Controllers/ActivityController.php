@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 
 use View;
 use App\Activity;
+use App\Machine;
+use Response;
+use Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CreateActivityRequest;
 
@@ -44,6 +47,19 @@ class ActivityController extends Controller {
 	 public function store(CreateActivityRequest $request)
  	{
  		$activity = Activity::create($request->all());
+		$activity_id = $activity->id;
+
+		//se guardan los datos de la tabla dinamica, (Maquinas)
+		$table_details = '';
+		if (Input::get('table_details')) {
+				$table_details = json_decode(Input::get('table_details'));
+				foreach ($table_details->elements as $value) {
+						//attach  -> Ingresar los datos relacionados en la tabla pivote
+						if($value->machine_id > 0){
+							$activity->machines()->attach(['machine_id' => $value->machine_id]);
+						}
+				}
+		}
  		return Redirect::to('admin/activity')->with('success_message', 'Registro guardado!');
  	}
 
@@ -84,6 +100,17 @@ class ActivityController extends Controller {
  		$activity = Activity::findOrFail($id);
  		$activity->fill($request->all());
  		$activity->save();
+
+		$table_details = '';
+		if (Input::get('table_details')) {
+				//se eliminan registros anteriores
+				$activity->machines()->detach();
+				$table_details = json_decode(Input::get('table_details'));
+				foreach ($table_details->elements as $value) {
+						//attach  -> Ingresar los datos relacionados en la tabla pivote
+						$activity->machines()->attach(['machine_id' => $value->machine_id]);
+				}
+		}
  		return Redirect::to('admin/activity')->with('success_message', 'Registro actualizado!');
  	}
 
@@ -138,6 +165,23 @@ class ActivityController extends Controller {
 					->paginate(10);
 					return View::make('admin.activity.view_activity', compact('items', 'search'));
 			}
+	}
+	/**
+	 * Metodo para traer las Maquinas relacionados de una Actividad AJAX
+	 * [getMachineDataTable description]
+	 * @return [type] [description]
+	 */
+	public function getMachineDataTable() {
+			$arrjson = array();
+			$activity = null;
+			if (\Input::get('activity_id')) {
+					$activity_id = \Input::get('activity_id');
+					$activity = Activity::find($activity_id);
+					$activity->machines;
+			}
+			$machines = Machine::all();
+			$arrjson = array('valid' => true, 'activity' => $activity, 'machines' => $machines);
+			return Response::json($arrjson);
 	}
 
 }
