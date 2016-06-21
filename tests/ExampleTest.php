@@ -21,13 +21,36 @@ class ExampleTest extends TestCase
 
     /**
      * Working With Databases
-     * Validar que si exita el Usuario Administrador
+     * Test Validar que si exita el Usuario Administradorl
      * [testUsersAll description]
      * @return [type] [description]
      */
-    public function testUsersAll()
+    public function testDataUser()
     {
         $this->seeInDatabase('users', ['name'=>'Alexander andres londoño espejo', 'email' => 'admin@admin.com']);
     }
+
+
+    /**
+     * Test para el ingreso a la aplicacion
+     * [testSuccessfullLogin description]
+     * @return [type] [description]
+     */
+     public function testSuccessfullLogin() {
+       $this->withSession(['title' => 'Clean room','summary'=>'Clean Room','files'=>'no'])
+       ->visit('/')
+       ->type('admin@admin.com','email')
+       ->type('admin','password')
+       ->press("Ingresar")
+       ->see("Bienvenido al sistema");
+    }
+
+    //  public function testSuccessfullLogin2() {
+    //
+    //    $this->withSession(['title' => 'Clean room','summary'=>'Clean Room','files'=>'no'])
+    //    ->visit('/admin/user')
+    //    ->see("admin@admin.com");
+    // }
+
 
 }
